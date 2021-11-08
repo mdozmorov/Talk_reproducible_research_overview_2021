@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>An Overview of Computational Reproducible Research and Tools</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mikhail Dozmorov" />
+    <meta name="date" content="2021-11-08" />
+    <script src="libs/header-attrs-2.9/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-my.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# An Overview of Computational Reproducible Research and Tools
+## Must know for modern data science
+### Mikhail Dozmorov
+### Virginia Commonwealth University
+### 2021-11-08
+
+---
+
+
+
+
+&lt;!--
+## Reproducibility and scientific progress
+
+- Science is the systematic enterprise of gathering knowledge about the universe and organizing and condensing that knowledge into testable laws and theories.
+
+- The success and credibility of science are anchored in the willingness of scientists to **expose their ideas and results to independent testing and replication by other scientists.**
+
+&amp;nbsp;
+
+.small[
+What is science? From http://www.aps.org/policy/statements/99_6.cfm 
+]
+--&gt;
+
+## What is reproducible research?
+
+- Reproducibility
+- Replicability
+- Repeatability
+- Reliability
+- Robustness
+- Generalizability
+
+**Flavors of reproducibility**
+
+- Empirical reproducibility
+- **Computational reproducibility**
+- Statistical reproducibility
+
+---
+## What is reproducible research?
+
+Reproducible research is the ultimate standard for strengthening scientific evidence by independent:
+
+- Investigators
+
+- Data 
+
+- Analytical methods 
+
+- Laboratories 
+
+- Instruments 
+
+---
+## Irreproducfibility ranges ~51% - 89%
+.center[ &lt;img src="img/irreproducibility_bar.png" height = 450&gt; ]
+.small[
+- Leonard Freedman, Iain Cockburn, and Timothy Simcoe, “[The Economics of Reproducibility in Preclinical Research](https://doi.org/10.1371/journal.pbio.1002165).” PLOS Biol 2015
+]
+
+---
+## Cost of irreproducibility
+.center[ &lt;img src="img/irreproducibility_chart.png" height = 450&gt; ]
+.small[
+- Leonard Freedman, Iain Cockburn, and Timothy Simcoe, “[The Economics of Reproducibility in Preclinical Research](https://doi.org/10.1371/journal.pbio.1002165).” PLOS Biol 2015
+]
+
+---
+## NIH focus on openness
+.center[ &lt;img src="img/NIH.png" height = 500&gt; ]
+
+---
+## NIH focus on openness
+
+- **Rigor and Reproducibility**
+
+https://grants.nih.gov/reproducibility/index.htm
+
+- **Public Access Policy**
+
+https://publicaccess.nih.gov/
+
+- **Data Sharing Policies**
+
+https://www.nlm.nih.gov/NIHbmic/nih_data_sharing_policies.html
+
+- **Model Organism Sharing Policy**
+
+https://grants.nih.gov/grants/policy/model_organism/
+
+---
+## NSF stance on openness
+.center[ &lt;img src="img/NSF.png" height = 450&gt; ]
+.small[
+- [NSF Data Management Plan](https://www.nsf.gov/bfa/dias/policy/dmp.jsp)
+- [NSF Scientific Integrity Policy](https://www.nsf.gov/bfa/dias/policy/si/index.jsp)
+]
+
+---
+## Steps in reproducible research
+
+**The most important is the mindset, when starting, that the end product will be reproducible.**
+.pull-right[– Keith Baggerly]
+
+
+- Experimental design
+
+- Data generation
+
+- Data analysis
+
+- Results interpretation
+
+- Dissemination of results
+
+---
+## Common approach - write report around results
+
+- Point and click approach: Use MS Excel for data entry, cleaning, preparation, and possibly statistical analysis.
+
+.center[ &lt;img src="img/excel.png" height = 280&gt; ]
+&amp;nbsp;
+
+.small[
+Zeeberg BR et al. “[Mistaken identifiers: gene name errors can be introduced inadvertently when using Excel in bioinformatics](https://doi.org/10.1186/1471-2105-5-80)” _BMC Bioinformatics_ 2004
+]
+
+---
+## Common approach - write report around results
+
+**Problems**
+
+- With point-and-click, there’s no way to record/save the steps that generated the (copy/pasted) results.
+
+- Data files are kept separately from the analysis code, and from reports.
+
+- After modifications of one of the files, it becomes unclear which version corresponds exactly to the reported results.
+
+- Every time something changes, you have to regenerate the figures/results/reports by hand – very time consuming.
+
+---
+## Data organization in spreadsheets 
+
+- Explicitly import text data as text, numeric as numeric, etc.
+
+- One thing in a cell (avoid comments, color coding, etc.)
+
+- Choose comprehensive variable names. Use "_" instead of spaces. Be consistent
+
+- Save the data as CSV, comma-separated values
+
+- Avoid calculations
+
+.center[ &lt;img src="img/excel_stats.png" height = 140&gt; ]
+
+.small[
+http://kbroman.org/dataorg/
+]
+
+---
+## Better approach - write report that generates results
+
+- The report is automated via code
+
+- Data is attached to the well-documented code
+
+- History of any changes should be preserved
+
+- The final report should be self-sufficient and reproducible with a single command
+
+---
+class: center, middle
+# What can we do
+.center[ &lt;img src="img/tools.png" height = 280&gt; ]
+### Tools to enhance reproducibility
+
+---
+## Know your Unix
+
+- Unix is a family of operating systems and environments that exploits the power of linguistic abstractions to perform tasks
+- Unix is not an acronym; it is a pun on "Multics". Multics was a large multi-user operating system that was being developed at Bell Labs shortly before Unix was created in the early '70s. Brian Kernighan is credited with the name
+- All data science is done in Unix
+
+&lt;center&gt;&lt;img src="img/unix_plate.jpg" height="200px" /&gt;&lt;/center&gt;
+
+.small[ http://www.read.seas.harvard.edu/~kohler/class/aosref/ritchie84evolution.pdf ]
+
+---
+## History of Unix
+
+- Initial file system, command interpreter (shell), and process management started by Ken Thompson.
+- File system and further development from Dennis Ritchie, as well as Doug McIlroy and Joe Ossanna.
+- Vast array of simple, dependable tools that each do one simple task.
+
+&lt;center&gt;&lt;img src="img/Ken_Thompson_(sitting)_and_Dennis_Ritchie_at_PDP-11_(2876612463).jpg" height="270px" /&gt;&lt;/center&gt;
+
+.small[ Ken Thompson (sitting) and Dennis Ritchie working together at a PDP-11 ]
+
+---
+## Philosophy of Unix
+
+- Vast array of simple, dependable tools.
+
+- Each do one simple task, and do it really well.
+
+- By combining these tools, one can conduct rather sophisticated analyses.
+
+- The Linux help philosophy: "RTFM" (Read the Fine Manual).
+
+---
+## Know your Unix
+
+- Unix users spend a lot of time at the **command line**.
+
+- In Unix, a word (command) is worth a thousand mouse clicks.
+
+&lt;center&gt;&lt;img src="https://www.howtogeek.com/wp-content/uploads/2017/03/img_58c0939c2d487.png" height="370px" /&gt;&lt;/center&gt;
+
+---
+## Unix systems
+
+- Three common types of laptop/desktop operating systems: Windows, Mac, Linux.
+- Mac and Linux are both Unix-like.
+- What that means for us: Unix-like operating systems are equipped with "shells"" that provide a command line user interface.
+
+&lt;center&gt;&lt;img src="img/itu-unix-linux-1024x576.jpg" height="370px" /&gt;&lt;/center&gt;
+
+---
+## Shell, aka command line, aka terminal
+
+- Shell is an interactive environment with a set of commands to initiate and direct computations
+
+- Shell encloses the complexity of OS, hence the name  
+    - You type in commands 
+    - Shell executes them
+
+https://en.wikipedia.org/wiki/Unix_shell 
+
+---
+## Shell, aka command line, aka terminal
+
+- The Bourne shell (`sh`) is a shell, or command-line interpreter, for computer operating systems
+
+- Developed by Stephen Bourne at Bell Labs, 1976
+
+- `bash` (the Bourne-Again shell) was later developed for the GNU project and incorporates features from the Bourne shell, `csh`, and `ksh`. It is meant to be POSIX-compliant
+
+https://en.wikipedia.org/wiki/Stephen_R._Bourne 
+
+---
+## Getting to the command line on Windows
+
+- [Awesome WSL - Windows Subsystem for Linux](https://github.com/sirredbeard/Awesome-WSL) - detailed guide for working on Linux in Windows
+
+- **Cygwin**, http://www.cygwin.com/
+
+- **Git Bash**, https://git-for-windows.github.io/ 
+
+- Boot from a CD or USB (search for "linux usb")
+
+- Install the whole Linux systems as a Virtual Machine in **VirtualBox**, https://www.virtualbox.org/
+
+- Remote access, SSH, [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/), [MobaXterm](https://mobaxterm.mobatek.net/)
+
+---
+## Interacting with shell
+
+- Most commands take additional arguments that fine tune their behavior
+
+- If you don't know what a command does, use the command `man &lt;command&gt;`
+
+- Press `q` to quit the `man` page viewer
+
+- Most often, you’ll use `&lt;command&gt; -h` or `&lt;command&gt; --help`
+
+- Some commands output help if executed without any arguments
+
+---
+## File system: Full vs. relative paths
+
+&lt;center&gt;&lt;img src="img/file_paths.png" height="330px" /&gt;&lt;/center&gt;
+
+- `cd /` - go to the root directory
+- `cd /usr/home/jack/bin` - go to the user’s sub-directory
+- `cd ..` - go to the upper level directory
+- `cd`, or `cd ~` - go to the user’s home directory
+- `cd --` - go to the last visited directory
+
+---
+## Orienting in the filesystem
+
+- `pwd` 		- print working directory
+
+- `ls` 			- list all files in the current directory
+
+- `ls -1` 	- list files in _one_ column
+
+- `ls –lah`	- list files in `l`ong, `h`uman readable format, include `a`ll content, user, owner, permissions
+
+---
+## Creating, moving, copying, and removing files
+
+- `touch &lt;file&gt;` - creates an empty file
+
+- `nano &lt;file&gt;` - edit it
+
+- `mkdir &lt;dirname&gt;` - creates a directory
+
+- `cp &lt;source_file&gt; &lt;target_file&gt;` - copy a file to another location/file
+
+- `mv &lt;source_file&gt; &lt;target_file&gt;` - move a file
+
+- `rm &lt;file&gt;` - remove a file. If multiple files provided, removes all of them
+
+- `rm –r &lt;dirname&gt;` - recursive removal (deletes a directory)
+
+---
+## Other essential commands
+
+|           |          |
+|-----------|----------|
+| head/tail | cut      |
+| for       | comm     |
+| sort      | echo     |
+| uniq      | basename |
+| wc        | dirname  |
+| tr        | history  |
+| grep      | which    |
+| join      | who      |
+| kill      | grep     |
+| tar       | seq      |
+| gzip      | paste    |
+
+---
+## Scripts - plain text files with shell commands
+
+- A script is a file with a `.sh` extension. It contains a list of shell commands executed by an interpreter
+
+- Shebang  (`#!`) defines the interpreter on the first line  
+    - `#!/bin/bash` - commands interpreted by bash
+    - `#!/usr/bin/python` - interpreted by Python
+
+```bash
+#!/bin/bash
+echo "Hello, world!"
+```
+
+- Running a script: `./hello_world.sh` or `bash hello_world.sh `
+
+---
+class: center, middle
+# Remote computing
+### SSH (Secure Shell protocol)
+
+---
+## What is SSH?
+
+- “SSH is a protocol for secure remote login and other secure network services over an insecure network.” – RFC 4251
+
+- Secure communication channel between two computers
+    - Uses strong encryption and authentication to provide confidentiality and authenticity of the data.
+
+- Many uses other than remote shell (e.g., copying files from/to a remote computer).
+
+.small[https://datatracker.ietf.org/doc/html/rfc4251]
+
+---
+## Some implementations
+
+- `OpenSSH` – common on UNIX systems, open implementation of the last free SSH release, a suite of networking utilities.
+
+- `PuTTY` – client only, Windows.
+
+- `MobaXterm` - Enhanced terminal for Windows with X11 server, tabbed SSH client, network tools and much more.
+
+.small[ https://www.openssh.com/
+
+https://www.chiark.greenend.org.uk/~sgtatham/putty/
+
+https://mobaxterm.mobatek.net/ ]
+
+&lt;!--
+## Layering of SSH Protocols
+
+- **Transport Layer Protocol**
+    - Provides server authentication, confidentiality, and integrity
+- **User Authentication Protocol**
+    - Authenticates the client-side user to the server
+- **Connection Protocol**
+    - Multiplexes the tunnel into logical channels
+- New protocols can coexist with the existing ones
+--&gt;
+
+---
+## Basic use
+
+```bash
+ssh &lt;ssh_server_name&gt;
+ssh -l &lt;username&gt; &lt;ssh_server_name&gt;
+# Or
+ssh &lt;username&gt;@&lt;ssh_server_name&gt;[:/path/on/server]
+ssh &lt;ssh_server_name&gt; &lt;command_to_run&gt;
+```
+
+---
+## Encryption concepts
+
+**Public and private keys** for passwordless network communications.
+
+- Both public and private keys are generated by you – they are yours.
+
+- A public key is a “lock” that can only be opened with the corresponding private key.
+
+- Public key can be placed on any other computer you want to connect to.
+
+- Private key stays private on any machine you’ll be connecting from.
+
+.center[ &lt;img src="img/ssh1.png" height = 150&gt; ]
+
+---
+## Getting public and private keys
+
+Generate your public and private keys
+
+- First, check if you already have them, `ls -al ~/.ssh`
+
+- If not, generate, `ssh-keygen -t rsa -b 4096 -C your_email@example.com`
+
+.center[ &lt;img src="img/ssh2.png" height = 150&gt; ]
+
+---
+## Add public key to any machine
+
+- Copy your public key `~/.ssh/id_dsa.pub` to a remote machine 
+
+- Add the content of your public key to `~/.ssh/authorized_keys` on the remote machine
+
+- Make sure the `~/.ssh/authorized_keys` has the right permissions (`read` + `write` for user, `nothing` for group and all)
+
+```bash
+cat ~/.ssh/id_dsa.pub | ssh user@remote.machine.com 'mkdir -p .ssh; cat &gt;&gt; .ssh/authorized_keys; chmod 600 authorized_keys'
+```
+
+.small[ http://mah.everybody.org/docs/ssh ]
+
+---
+## Where SSH stores User Configuration Files
+
+- `~/.ssh/`
+    - `id_*` - private authentication keys
+    - `id_*.pub` – public authentication keys
+    - `known_hosts` – list of known public host keys
+    - `authorized_keys` – list of allowed public authentication keys
+
+---
+## Secure copy (`scp`) files over the network
+
+**scp**: securely copy a file from one computer to another.
+ 
+ - Use `scp` to securely transfer files between two Unix computers.
+ 
+ - `scp` encrypts both the file and any passwords exchanged.
+ 
+The syntax for the scp command is:
+```bash
+scp [options] username1@source_host:directory1/filename1 \
+              username2@destination_host:directory2/filename2
+```
+- Use `-r` (recursive) option to copy a directory
+
+---
+class: center, middle
+# Installing software
+### Conda
+
+---
+## Conda environment
+
+Package, dependency and environment management for any language — Python, R, Java, and more. Install "miniconda" for your OS.
+
+- **Environment** - a place isolated from the operating system where one can install software without risking system's conflicts. If something will be wrong in the environment, it is easy to delete and start again. Think about environments like subfolders (they are).
+
+By default, you are in the "base" environment
+
+https://docs.conda.io/en/latest/miniconda.html
+
+---
+## Conda environment
+
+Making new environment:
+```bash
+conda create -n new-env
+```
+Choose name `new-env` reflecting what you plan to install, e.g., `conda create -n UCSC`
+
+https://docs.conda.io/
+
+---
+## Conda environment
+
+Install any programming language within the environment (add `-y` arguiment to answer Yes to all prompts):
+```bash
+conda create -n new-env python=3.9
+conda create -n new-env r
+```
+
+Activate/Deactivate environment:
+```
+conda activate new-env
+# source activate new-env
+conda deactivate
+```
+
+Note the change in command prompt, when in an environment, e.g. `(jupyterlab) mdozmorov@work:$`
+
+---
+## Conda environment
+
+Within an environment, install software per instructions. Also, use `conda` itself to install software:
+```bash
+conda install -c bioconda ucsc-bigwigtowig
+```
+
+Search for "conda install 'software name'"
+
+Create as many environments as you want. List them as:
+```bash
+conda info --envs
+conda env list
+```
+
+Delete an environment.
+```bash
+conda remove --name new-env --all
+```
+
+---
+class: center, middle
+# Automate every step using scripts/pipelines
+.center[ &lt;img src="img/pipeline.png" height = 280&gt; ]
+### Pipelines are cool
+
+---
+## Makefiles - reproducibility in command line
+
+- I started with **Make**, a tool which controls the workflow of generating target/result files from the dependencies/source files.
+
+- Automates/documents a workflow.
+
+- Intelligently handles the dependencies among data files, code.
+
+- Accounts for the updates in data, code.
+
+---
+## Modern workflow pipelines
+
+- **Snakemake** workflow management system
+
+- **Nextflow** - data-driven computational pipeline
+
+- **WDL** - the Workflow Description Language
+
+- **CWL** - Common Workflow Language
+
+.small[ https://snakemake.readthedocs.io/
+
+https://www.nextflow.io/
+
+https://openwdl.org/
+
+https://www.commonwl.org/
+]
+
+---
+class: center, middle
+# Create reproducible reports
+.center[ &lt;img src="img/knitr_wide.png" height = 280&gt; ]
+### Literate programming for humans and computers
+
+---
+## Automate everything
+
+- R – free/open source programming language
+
+- Runs on Windows, Mac, and Linux
+
+- Extensible with a very large collection of actively developing packages
+
+- Excellent graphics &amp; report-creating capabilities
+
+.center[ &lt;img src="img/R.png" height = 280&gt; ]
+
+---
+## R is reimagined with RStudio
+.center[ &lt;img src="img/Rstudio.png" height = 480&gt; ]
+.small[https://www.rstudio.com/products/rstudio/download/]
+
+---
+## Self-documenting code
+
+.pull-left[
+- A report containing a stream of **text and code** chunks
+
+- Each code chunk loads data, computes results, shows figures
+
+- Each text chunk explains how the code chunks work
+
+ - The resulting report is human- and machine readable
+]
+
+.pull-right[
+.center[ &lt;img src="img/knuth.png" height = 380&gt; ]
+.small[Donald E. Knuth "[Literate Programming](https://doi.org/10.1093/comjnl/27.2.97)" _The Computer Journal_, 01 January 1984]
+]
+
+---
+## R Markdown basics
+
+- **Markdown** – a lightweight markup language for plain text formatting syntax. Easily converted to HTML. Developed in 2004
+
+.center[ &lt;img src="img/rmarkdown1.png" height = 450&gt; ]
+
+---
+## R Markdown basics
+.center[ &lt;img src="img/rmarkdown2.png" height = 380&gt; ]
+.small[
+[The R Markdown Cheat sheet](http://shiny.rstudio.com/articles/rm-cheatsheet.html)
+
+[R Markdown Reference Guide PDF](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+]
+
+---
+## Literate programming with knitR
+
+- **knitR** - a package for dynamic report generation written in R Markdown
+
+- Supports RMarkdown, LaTeX, MathJax. PDF, HTML, DOCX output
+
+- Developed in 2012 by Yihui Xie
+
+.center[ &lt;img src="img/knitr.png" height = 280&gt; ]
+
+.small[
+http://yihui.name/knitr/ 
+]
+
+---
+## Literate programming with knitR
+
+- Code chunks separated from text. Code inline with text allowed
+
+- Graphics, code generated and external images
+
+- Tables, code generated and in RMarkdown format
+
+- Caching long code chunks
+
+- Code chunks and results output fully customizable
+
+---
+## Literate programming with knitR
+- Mix markdown with code
+.center[ &lt;img src="img/rmarkdown3.png" height = 450&gt; ]
+
+---
+## Literate programming with knitr
+- "Knit" a report with one command
+.center[ &lt;img src="img/rmarkdown4.png" height = 230&gt; ]
+.center[ &lt;img src="img/rmarkdown5.png" height = 230&gt; ]
+
+---
+## Reproducibility for other languages
+
+**Jupyterlab Notebooks** (formerly IPython/Jupyter)
+- Combine text, equations, code, and graphics
+- Markdown support
+- Multiple languages support (&gt;40)
+
+.center[ &lt;img src="img/jupyter.png" height = 280&gt; ]
+.small[
+https://jupyter.org/
+]
+
+---
+class: center, middle
+# Track changes with version control (GitHub)
+.center[ &lt;img src="img/github_logo.png" height = 280&gt; ]
+### Collaborate with elegance
+
+---
+## Keeping history of changes 
+
+.center[ &lt;img src="img/final.png" height = 450&gt; ]
+.small[
+http://www.phdcomics.com/comics/archive.php?comicid=1531
+]
+
+---
+## Version control – what and when did you do
+
+**Git and GitHub – version control system**
+
+- Each project stored in its own repository
+
+- Keep history of changes – track what you did
+
+- Ability to go back if something breaks
+
+- Branch out, go creative, then merge or revert the changes
+
+- Collaborate through merging changes from multiple people
+
+---
+## Version control – what and when did you do
+
+- **Git** is a command line tool
+- **GitHub.com** is a web-based storage for your project repositories
+- RStudio has Git integration
+
+&amp;nbsp;
+
+- &lt;span style="font-family: monospace; font-weight:bold; color:red;"&gt;Git clone ...&lt;/span&gt; – clone an existing repository
+- &lt;span style="font-family: monospace; font-weight:bold; color:red;"&gt;Git add&lt;/span&gt; – add a file to version control system
+- &lt;span style="font-family: monospace; font-weight:bold; color:red;"&gt;Git commit&lt;/span&gt; – make a snapshot of current changes
+- &lt;span style="font-family: monospace; font-weight:bold; color:red;"&gt;Git push/pull&lt;/span&gt; – send/get 
+changes to/from GitHub
+
+---
+class: center, middle
+# Reproducibility for the whole project
+.center[ &lt;img src="img/docker-cloud.png" height = 280&gt; ]
+### Docker and Cloud computing
+
+---
+## Reproducibility for the whole projects
+
+**Docker** - an envelope (or container) for the whole project environment ~ lightweight virtual machine
+
+- OS-independent, portable application images
+- Preserves all application dependencies
+- Easy to distribute
+
+.center[ &lt;img src="img/docker.png" height = 280&gt; ]
+&amp;nbsp;
+
+.small[
+https://www.docker.com/
+]
+
+## Reproducibility: tools that enable reproducibility of analysis results
+
+- **Docker** - Packages software with all necessary components to enable reproducible deployment in different computing environments
+    - An open-source project to easily create lightweight, portable, self-sufficient images
+    - A tool for creating a layered filesystem; each layer is versioned and can be shared across running instances, making for much more lightweight deployments
+    - A company behind the project, as well as a site called the "Docker Hub" for sharing containers
+    - Docker **is not** a virtual machine
+
+- **Singularity** - Similar to Docker but designed for scientific software running in high-performance computing environments
+
+.small[ https://www.docker.com/
+
+https://sylabs.io/guides/3.5/user-guide/
+]
+
+---
+## Docker terminology
+
+- **Image** - The blueprints of applications which form the basis of containers. Get them with `docker pull`
+    - A snapshot of a filesystem at a certain point in time
+    - The image is composed of layers that progressively stack on top of each other
+    - Layers can be shared by running instances of an image
+
+```bash
+$ docker pull ubuntu
+Pulling repository ubuntu
+c4ff7513909d: Download complete 
+511136ea3c5a: Download complete 
+1c9383292a8f: Download complete
+...
+```
+
+---
+## Docker terminology
+
+- **Container** - runtime instance of an image plus a read/write layer. Create them with `docker run`, list running containers with `docker ps`
+
+- A Docker container can be seen as a computer inside your computer
+
+- It can be saved and send to your friends; and when they start this computer and run your code they will get exactly the same results as you did
+
+---
+## Docker terminology
+
+- **Dockerfile** - build script that defines:
+    - an existing image as the starting point
+    - a set of instructions to augment that image (each of which results in a new layer in the file system)
+    - meta-data such as the ports exposed
+    - the command to execute when the image is run
+
+```bash
+FROM ubuntu:18.04
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+LABEL authors="Nicolas Servant" \
+      description="Docker image containing all requirements for the HiC-Pro pipeline"
+
+## Install system tools
+RUN apt-get update \
+  &amp;&amp; apt-get install -y build-essential \
+  wget \
+  unzip \
+  bzip2 \
+  gcc \
+  g++ &amp;&amp; apt-get clean
+```
+
+---
+## Running docker (RStudio with R/Bioconductor)
+
+```bash
+docker run -e PASSWORD=mypass -p 8787:8787 -d --rm \
+  -v $(pwd):/home/rstudio \
+  bioconductor/bioconductor_docker:devel
+```
+- `bioconductor/bioconductor_docker:devel` - name of Docker image (will be pulled, if not exists locally)
+- `-p 8787:8787` - maps port 8787 on a local computer to port 8787 in the Docker container
+- `-v $(pwd):/home/rstudio` - maps the current folder to `/home/rstudio` in the Docker container
+
+Open `http://localhost:8787/` in your web browser and login with `rstudio` user name and `mypass` password
+
+---
+## Cloud providers
+
+| Platform              | Website                      |
+|-----------------------|------------------------------|
+| Amazon Web Services   | https://aws.amazon.com/      |
+| Google Cloud Platform | https://cloud.google.com/    |
+| Microsoft Azure       | https://azure.microsoft.com/ |
+| IBM Cloud             | https://www.ibm.com/cloud    |
+| Alibaba Cloud         | https://us.alibabacloud.com/ |
+
+.small[ Langmead, Ben, and Abhinav Nellore. “[Cloud Computing for Genomic Data Analysis and Collaboration](https://doi.org/10.1038/nrg.2017.113).” Nature Reviews Genetics, January 30, 2018. ]
+
+---
+## Kubernetes
+
+Kubernetes is a container orchestration platform
+- Complex tasks may require running multiple applications in separate containers
+- Containers can exchange information over network
+- Need fault tolerance mechanism to deal with failed containers
+
+Kubernetes manages the entire lifecycle of individual containers, spinning up and shutting down resources as needed. 
+
+If a container shuts down unexpectedly, Kubernetes will react by launching another container in its place. 
+
+Think central node controlling working nodes.
+
+---
+## Learn more
+
+- [Reproducible research tools](https://mdozmorov.github.io/BIOS691.2018/) - the fundamental concepts in computational reproducible research. Through lectures and hands-on exercises students learn best practices of statistical data analysis and programming.
+
+- [Bioinformatics notes](https://github.com/mdozmorov/Bioinformatics_notes) &lt;img src="https://img.shields.io/github/stars/mdozmorov/Bioinformatics_notes?style=social" align="center"&gt;
+
+- [Statistics notes](https://github.com/mdozmorov/Statistics_notes) &lt;img src="https://img.shields.io/github/stars/mdozmorov/Statistics_notes?style=social" align="center"&gt;
+
+- [Programming notes](https://github.com/mdozmorov/Programming_notes) &lt;img src="https://img.shields.io/github/stars/mdozmorov/Programming_notes?style=social" align="center"&gt;
+
+- [R notes](https://github.com/mdozmorov/R_notes) &lt;img src="https://img.shields.io/github/stars/mdozmorov/R_notes?style=social" align="center"&gt;
+
+- [Python notes](https://github.com/mdozmorov/Python_notes) &lt;img src="https://img.shields.io/github/stars/mdozmorov/Python_notes?style=social" align="center"&gt;
+
+- [Machine learning notes](https://github.com/mdozmorov/MachineLearning_notes) &lt;img src="https://img.shields.io/github/stars/mdozmorov/MachineLearning_notes?style=social" align="center"&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
