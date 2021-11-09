@@ -4,7 +4,7 @@
     <title>An Overview of Computational Reproducible Research and Tools</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mikhail Dozmorov" />
-    <meta name="date" content="2021-11-08" />
+    <meta name="date" content="2021-11-09" />
     <script src="libs/header-attrs-2.9/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="xaringan-my.css" type="text/css" />
@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 ## Must know for modern data science
 ### Mikhail Dozmorov
 ### Virginia Commonwealth University
-### 2021-11-08
+### 2021-11-09
 
 ---
 
@@ -203,6 +203,15 @@ class: center, middle
 .small[ http://www.read.seas.harvard.edu/~kohler/class/aosref/ritchie84evolution.pdf ]
 
 ---
+## Unix systems
+
+- Three common types of laptop/desktop operating systems: Windows, Mac, Linux.
+- Mac and Linux are both Unix-like.
+- What that means for us: Unix-like operating systems are equipped with "shells" that provide a command line user interface.
+
+&lt;center&gt;&lt;img src="img/itu-unix-linux-1024x576.jpg" height="370px" /&gt;&lt;/center&gt;
+
+&lt;!--
 ## History of Unix
 
 - Initial file system, command interpreter (shell), and process management started by Ken Thompson.
@@ -212,6 +221,7 @@ class: center, middle
 &lt;center&gt;&lt;img src="img/Ken_Thompson_(sitting)_and_Dennis_Ritchie_at_PDP-11_(2876612463).jpg" height="270px" /&gt;&lt;/center&gt;
 
 .small[ Ken Thompson (sitting) and Dennis Ritchie working together at a PDP-11 ]
+--&gt;
 
 ---
 ## Philosophy of Unix
@@ -225,24 +235,6 @@ class: center, middle
 - The Linux help philosophy: "RTFM" (Read the Fine Manual).
 
 ---
-## Know your Unix
-
-- Unix users spend a lot of time at the **command line**.
-
-- In Unix, a word (command) is worth a thousand mouse clicks.
-
-&lt;center&gt;&lt;img src="https://www.howtogeek.com/wp-content/uploads/2017/03/img_58c0939c2d487.png" height="370px" /&gt;&lt;/center&gt;
-
----
-## Unix systems
-
-- Three common types of laptop/desktop operating systems: Windows, Mac, Linux.
-- Mac and Linux are both Unix-like.
-- What that means for us: Unix-like operating systems are equipped with "shells"" that provide a command line user interface.
-
-&lt;center&gt;&lt;img src="img/itu-unix-linux-1024x576.jpg" height="370px" /&gt;&lt;/center&gt;
-
----
 ## Shell, aka command line, aka terminal
 
 - Shell is an interactive environment with a set of commands to initiate and direct computations
@@ -251,7 +243,9 @@ class: center, middle
     - You type in commands 
     - Shell executes them
 
-https://en.wikipedia.org/wiki/Unix_shell 
+&lt;center&gt;&lt;img src="https://www.howtogeek.com/wp-content/uploads/2017/03/img_58c0939c2d487.png" height="370px" /&gt;&lt;/center&gt;
+
+.small[ https://en.wikipedia.org/wiki/Unix_shell ]
 
 ---
 ## Shell, aka command line, aka terminal
@@ -284,7 +278,11 @@ https://en.wikipedia.org/wiki/Stephen_R._Bourne
 
 - Most commands take additional arguments that fine tune their behavior
 
-- If you don't know what a command does, use the command `man &lt;command&gt;`
+- If you don't know what a command does, use the command 
+
+```bash
+man &lt;command&gt; # E.g., man grep
+```
 
 - Press `q` to quit the `man` page viewer
 
@@ -416,6 +414,7 @@ ssh &lt;ssh_server_name&gt;
 ssh -l &lt;username&gt; &lt;ssh_server_name&gt;
 # Or
 ssh &lt;username&gt;@&lt;ssh_server_name&gt;[:/path/on/server]
+# ssh -X dozmorovm@merlot.bis.vcu.edu
 ssh &lt;ssh_server_name&gt; &lt;command_to_run&gt;
 ```
 
@@ -432,18 +431,33 @@ ssh &lt;ssh_server_name&gt; &lt;command_to_run&gt;
 
 - Private key stays private on any machine you’ll be connecting from.
 
-.center[ &lt;img src="img/ssh1.png" height = 150&gt; ]
+.center[ &lt;img src="img/ssh1.png" height = 250&gt; ]
+
+---
+## Where SSH stores User Configuration Files
+
+- `~/.ssh/`
+    - `id_*` - private authentication keys
+    - `id_*.pub` – public authentication keys
+    - `known_hosts` – list of known public host keys
+    - `authorized_keys` – list of allowed public authentication keys
+
+.center[ &lt;img src="img/ssh2.png" height = 300&gt; ]
 
 ---
 ## Getting public and private keys
 
 Generate your public and private keys
 
-- First, check if you already have them, `ls -al ~/.ssh`
+- First, check if you already have them, 
+```bash
+ls -al ~/.ssh
+```
 
-- If not, generate, `ssh-keygen -t rsa -b 4096 -C your_email@example.com`
-
-.center[ &lt;img src="img/ssh2.png" height = 150&gt; ]
+- If not, generate, 
+```bash
+ssh-keygen -t rsa -b 4096 -C your_email@example.com
+```
 
 ---
 ## Add public key to any machine
@@ -459,15 +473,6 @@ cat ~/.ssh/id_dsa.pub | ssh user@remote.machine.com 'mkdir -p .ssh; cat &gt;&gt;
 ```
 
 .small[ http://mah.everybody.org/docs/ssh ]
-
----
-## Where SSH stores User Configuration Files
-
-- `~/.ssh/`
-    - `id_*` - private authentication keys
-    - `id_*.pub` – public authentication keys
-    - `known_hosts` – list of known public host keys
-    - `authorized_keys` – list of allowed public authentication keys
 
 ---
 ## Secure copy (`scp`) files over the network
@@ -495,7 +500,8 @@ class: center, middle
 
 Package, dependency and environment management for any language — Python, R, Java, and more. Install "miniconda" for your OS.
 
-- **Environment** - a place isolated from the operating system where one can install software without risking system's conflicts. If something will be wrong in the environment, it is easy to delete and start again. Think about environments like subfolders (they are).
+- **Environment** - a place isolated from the operating system where one can install software without risking system's conflicts. 
+- If something will be wrong in the environment, it is easy to delete and start again. Think about environments like subfolders (they are).
 
 By default, you are in the "base" environment
 
@@ -508,8 +514,10 @@ Making new environment:
 ```bash
 conda create -n new-env
 ```
-Choose name `new-env` reflecting what you plan to install, e.g., `conda create -n UCSC`
-
+Choose name `new-env` reflecting what you plan to install, e.g., 
+```bash
+conda create -n UCSC
+```
 https://docs.conda.io/
 
 ---
@@ -522,7 +530,7 @@ conda create -n new-env r
 ```
 
 Activate/Deactivate environment:
-```
+```bash
 conda activate new-env
 # source activate new-env
 conda deactivate
@@ -589,6 +597,27 @@ https://www.commonwl.org/
 ]
 
 ---
+## Snakefile example
+
+```snakemake
+rule all:
+    input:
+        "ERR458493_fastqc.html",
+        "ERR458493_fastqc.zip"
+
+rule make_fastqc:
+    input:
+        "ERR458493.fastq.gz"
+    output:
+        "ERR458493_fastqc.html",
+        "ERR458493_fastqc.zip"  
+    shell:
+        "fastqc ERR458493.fastq.gz"
+```
+
+.small[ https://github.com/ngs-docs/2020-GGG298/tree/master/Week4-snakemake-for-workflows ]
+
+---
 class: center, middle
 # Create reproducible reports
 .center[ &lt;img src="img/knitr_wide.png" height = 280&gt; ]
@@ -622,7 +651,7 @@ class: center, middle
 
 - Each text chunk explains how the code chunks work
 
- - The resulting report is human- and machine readable
+- The resulting report is human- and machine readable
 ]
 
 .pull-right[
@@ -666,7 +695,7 @@ http://yihui.name/knitr/
 
 - Code chunks separated from text. Code inline with text allowed
 
-- Graphics, code generated and external images
+- Graphics, code-generated and external images
 
 - Tables, code generated and in RMarkdown format
 

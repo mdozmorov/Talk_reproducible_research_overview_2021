@@ -1,6 +1,6 @@
 # An Overview of Computational Reproducible Research and Tools
 
-Lecture slides giving an overview of must know tools for modern data science. November 9, 2021. View them at https://mdozmorov.github.io/Talk_reproducible_research_overview_2021/
+Lecture slides giving an overview of must know tools for modern data science. November 9, 2021, 2:30-3:20pm. View them at https://mdozmorov.github.io/Talk_reproducible_research_overview_2021/
 
 Brief overview of computational reproducible research, Unix, remote computing (SSH), Conda, pipelines, R/RMarkdown, Git/GitHub, Docker, Cloud, Kubernetes. The goal is to provide students with modern data science ecosystem of tools for further studies.
 

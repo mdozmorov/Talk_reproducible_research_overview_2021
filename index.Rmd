@@ -207,6 +207,15 @@ class: center, middle
 .small[ http://www.read.seas.harvard.edu/~kohler/class/aosref/ritchie84evolution.pdf ]
 
 ---
+## Unix systems
+
+- Three common types of laptop/desktop operating systems: Windows, Mac, Linux.
+- Mac and Linux are both Unix-like.
+- What that means for us: Unix-like operating systems are equipped with "shells" that provide a command line user interface.
+
+<center><img src="img/itu-unix-linux-1024x576.jpg" height="370px" /></center>
+
+<!--
 ## History of Unix
 
 - Initial file system, command interpreter (shell), and process management started by Ken Thompson.
@@ -216,6 +225,7 @@ class: center, middle
 <center><img src="img/Ken_Thompson_(sitting)_and_Dennis_Ritchie_at_PDP-11_(2876612463).jpg" height="270px" /></center>
 
 .small[ Ken Thompson (sitting) and Dennis Ritchie working together at a PDP-11 ]
+-->
 
 ---
 ## Philosophy of Unix
@@ -229,24 +239,6 @@ class: center, middle
 - The Linux help philosophy: "RTFM" (Read the Fine Manual).
 
 ---
-## Know your Unix
-
-- Unix users spend a lot of time at the **command line**.
-
-- In Unix, a word (command) is worth a thousand mouse clicks.
-
-<center><img src="https://www.howtogeek.com/wp-content/uploads/2017/03/img_58c0939c2d487.png" height="370px" /></center>
-
----
-## Unix systems
-
-- Three common types of laptop/desktop operating systems: Windows, Mac, Linux.
-- Mac and Linux are both Unix-like.
-- What that means for us: Unix-like operating systems are equipped with "shells"" that provide a command line user interface.
-
-<center><img src="img/itu-unix-linux-1024x576.jpg" height="370px" /></center>
-
----
 ## Shell, aka command line, aka terminal
 
 - Shell is an interactive environment with a set of commands to initiate and direct computations
@@ -255,7 +247,9 @@ class: center, middle
     - You type in commands 
     - Shell executes them
 
-https://en.wikipedia.org/wiki/Unix_shell 
+<center><img src="https://www.howtogeek.com/wp-content/uploads/2017/03/img_58c0939c2d487.png" height="370px" /></center>
+
+.small[ https://en.wikipedia.org/wiki/Unix_shell ]
 
 ---
 ## Shell, aka command line, aka terminal
@@ -288,7 +282,11 @@ https://en.wikipedia.org/wiki/Stephen_R._Bourne
 
 - Most commands take additional arguments that fine tune their behavior
 
-- If you don't know what a command does, use the command `man <command>`
+- If you don't know what a command does, use the command 
+
+```bash
+man <command> # E.g., man grep
+```
 
 - Press `q` to quit the `man` page viewer
 
@@ -420,6 +418,7 @@ ssh <ssh_server_name>
 ssh -l <username> <ssh_server_name>
 # Or
 ssh <username>@<ssh_server_name>[:/path/on/server]
+# ssh -X dozmorovm@merlot.bis.vcu.edu
 ssh <ssh_server_name> <command_to_run>
 ```
 
@@ -436,7 +435,7 @@ ssh <ssh_server_name> <command_to_run>
 
 - Private key stays private on any machine you’ll be connecting from.
 
-.center[ <img src="img/ssh1.png" height = 200> ]
+.center[ <img src="img/ssh1.png" height = 250> ]
 
 ---
 ## Where SSH stores User Configuration Files
@@ -447,17 +446,22 @@ ssh <ssh_server_name> <command_to_run>
     - `known_hosts` – list of known public host keys
     - `authorized_keys` – list of allowed public authentication keys
 
-.center[ <img src="img/ssh2.png" height = 200> ]
+.center[ <img src="img/ssh2.png" height = 300> ]
 
 ---
 ## Getting public and private keys
 
 Generate your public and private keys
 
-- First, check if you already have them, `ls -al ~/.ssh`
+- First, check if you already have them, 
+```bash
+ls -al ~/.ssh
+```
 
-- If not, generate, `ssh-keygen -t rsa -b 4096 -C your_email@example.com`
-
+- If not, generate, 
+```bash
+ssh-keygen -t rsa -b 4096 -C your_email@example.com
+```
 
 ---
 ## Add public key to any machine
@@ -514,8 +518,10 @@ Making new environment:
 ```bash
 conda create -n new-env
 ```
-Choose name `new-env` reflecting what you plan to install, e.g., `conda create -n UCSC`
-
+Choose name `new-env` reflecting what you plan to install, e.g., 
+```bash
+conda create -n UCSC
+```
 https://docs.conda.io/
 
 ---
